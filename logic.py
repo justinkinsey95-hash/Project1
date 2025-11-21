@@ -77,7 +77,6 @@ class Logic(QMainWindow, Ui_MainWindow):
             self.lineEdit_test1.setFocus()
 
     def submit(self):
-        #TODO: currently accepts str chars for test scores
         #hides previous label
         self.label_submitted.hide()
 
@@ -149,31 +148,35 @@ class Logic(QMainWindow, Ui_MainWindow):
         #updates the csv file
         with open('student_grades.csv', 'a', newline='') as csvfile:
             content = csv.writer(csvfile)
+            test1 = 0
+            test2 = 0
+            test3 = 0
+            test4 = 0
             #test1
             if len(self.lineEdit_test1.text()) == 0:
                 test1 = 0
             else:
-                test1 = self.lineEdit_test1.text()
+                test1 = int(self.lineEdit_test1.text())
 
             #test2
             if len(self.lineEdit_test2.text()) == 0:
                 test2 = 0
             else:
-                test2 = self.lineEdit_test2.text()
+                test2 = int(self.lineEdit_test2.text())
 
             #test3
             if len(self.lineEdit_test3.text()) == 0:
                 test3 = 0
             else:
-                test3 = self.lineEdit_test3.text()
+                test3 = int(self.lineEdit_test3.text())
 
             # test4
             if len(self.lineEdit_test4.text()) == 0:
                 test4 = 0
             else:
-                test4 = self.lineEdit_test4.text()
-            #scores = [test1, test2, test3, test4]
-            #highest = max(scores)
-            content.writerow([student_name, test1, test2, test3, test4,])
+                test4 = int(self.lineEdit_test4.text())
+            scores = [test1, test2, test3, test4]
+            highest = max(scores)
+            content.writerow([student_name, test1, test2, test3, test4, highest])
             self.label_submitted.setStyleSheet('color: green')
             self.label_submitted.show()
