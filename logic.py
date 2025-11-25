@@ -4,7 +4,10 @@ import csv
 import os
 
 class Logic(QMainWindow, Ui_MainWindow):
-    def __init__(self):
+    def __init__(self) -> None:
+        """
+        initialize the main window with the test score fields hidden.
+        """
         super().__init__()
         self.setupUi(self)
 
@@ -17,7 +20,10 @@ class Logic(QMainWindow, Ui_MainWindow):
         #submit button driving the interaction
         self.pushButton_submit.clicked.connect(lambda: self.submit())
 
-    def hide_fields(self):
+    def hide_fields(self) -> None:
+        """
+        hides all fields when lineEdit is an empty string.
+        """
         if self.lineEdit_scores.text() == "":
             self.label_submitted.hide()
             self.label_test1.hide()
@@ -33,7 +39,11 @@ class Logic(QMainWindow, Ui_MainWindow):
             self.lineEdit_test3.clear()
             self.lineEdit_test4.clear()
 
-    def update_test_fields(self):
+    def update_test_fields(self) -> None:
+        """
+        When the user submits the number of tests and it is 1-4, the corresponding fields show.
+        When the lineEdit_scores field is empty, the test fields are hidden.
+        """
         #TODO: lots of repetitive checks for num_tests checking to reveal fields.
         if self.lineEdit_scores.text().strip() == '':
             self.hide_fields()
@@ -76,7 +86,12 @@ class Logic(QMainWindow, Ui_MainWindow):
             self.lineEdit_test4.show()
             self.lineEdit_test1.setFocus()
 
-    def submit(self):
+    def submit(self) -> None:
+        """
+        Sends student name (or anonymous) with the corresponding tests score(s) to a csv.
+        Creates the csv if it does not exist already.
+        Records test scores 1-4 and tracks the highest score submitted per student.
+        """
         #hides previous label
         self.label_submitted.hide()
 
@@ -144,7 +159,7 @@ class Logic(QMainWindow, Ui_MainWindow):
                 content = csv.writer(csvfile)
                 content.writerow(['student', 'test 1', 'test 2', 'test 3', 'test 4', 'highest'])
                 break
-        #TODO: add logic for highest column. initialize test1-test4 at beginning of class
+
         #updates the csv file
         with open('student_grades.csv', 'a', newline='') as csvfile:
             content = csv.writer(csvfile)
