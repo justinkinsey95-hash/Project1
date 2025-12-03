@@ -1,7 +1,10 @@
 from PyQt6.QtWidgets import QApplication
 from logic import *
 
-def main():
+def main() -> None:
+    """
+    Runs the program and opens the main window.
+    """
     application = QApplication([])
     window = Logic()
     window.show()
